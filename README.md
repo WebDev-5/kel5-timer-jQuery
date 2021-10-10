@@ -26,7 +26,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/WebDev-5/kel5-timer-javascript">
-    <img src="images/icon.png" alt="Logo" width="80" height="80">
+    <img src="frontend/images/icon.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Multi Stopwatch Kelompok 5</h3>
@@ -226,4 +226,4 @@ Use this space to list resources you find helpful and would like to give credit 
 [issues-url]: https://github.com/WebDev-5/kel5-timer-javascript/issues
 [license-shield]: https://img.shields.io/github/license/WebDev-5/kel5-timer-javascript?style=for-the-badge&logo=appveyor
 [license-url]: https://github.com/WebDev-5/kel5-timer-javascript/blob/main/LICENSE.md
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: frontend/images/screenshot.png
