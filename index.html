@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+  <!-- Link for jquery required for bootstrap -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
+
+  <title> Multiple Stopwatch </title>
+  <link rel="shortcut icon" href="images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="styles/stopwatch.css">
+	<link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Baloo Chettan 2' rel='stylesheet'>
+</head>
+
+<body class='container'>
+  <div class="row">
+    <div class="container-fluid baloo-font">
+      <h1 class="page-header text-center">STOPWATCH</h1>
+      <form class="text-center">
+        <input id='title' type="text" class="baloo-font" placeholder="Enter Title for Stopwatch ...">
+        <input id="addWatch-btn" type="submit" class="baloo-font" value="ADD">
+        <button id="removeAll_btn">REMOVE ALL</button>
+      </form>
+      <hr>
+    </div>
+  </div>
+  <div id="stopwatches">
+    
+  </div>
+
+  <script src="scripts/stopwatch.js"></script>
+
+</body>
+
+</html>
