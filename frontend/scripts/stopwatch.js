@@ -2,24 +2,33 @@
 var listStopWatch = [];
 var idCounter = 1; //gives id to the watch object
 
-
 //given time in seconds returns a string in format hh:mm:ss
-function GiveTimeString(remSeconds) {
-  var secs = remSeconds % 60;
-  remSeconds = remSeconds - secs;
-  var mins = (remSeconds / 60) % 60;
-  remSeconds = remSeconds / 60 - mins;
-  var hrs = remSeconds / 60;
+function GiveTimeString(theMilliseconds) {
+  var secs = Math.floor(theMilliseconds / 1000);
+  var mins = Math.floor(secs / 60);
+  var hrs = Math.floor(secs / 3600);
+  secs = secs % 60
   if (hrs < 10) hrs = "0" + hrs;
   if (mins < 10) mins = "0" + mins;
   if (secs < 10) secs = "0" + secs;
   return hrs + ":" + mins + ":" + secs;
 }
 
+function GiveTimeStringTotal(theMilliseconds) {
+  var secs = Math.floor(theMilliseconds / 1000);
+  var mins = Math.floor(secs / 60);
+  var hrs = Math.floor(secs / 3600);
+  secs = secs % 60
+  if (hrs < 10) hrs = hrs;
+  if (mins < 10) mins = mins;
+  if (secs < 10) secs = secs;
+  return "Total: " + hrs +" Hours " + mins +" Minutes " + secs +" Seconds ";
+}
+
 //returns html body for the watch
 function StopWatchBody(Watch) {
-  var pausePlayButtonStr = function (status) {
-    if (status == 1) {
+  var pausePlayButtonStr = function (isRunning) {
+    if (isRunning == 1) {
       return (
         "<button id='pause_btn' onclick='PausePlayToggle(this, " +
         Watch.id +
@@ -34,6 +43,16 @@ function StopWatchBody(Watch) {
       );
     }
   };
+  if (Watch.isRunning == 0) {
+    var lastOpened = Watch.pauseTime;
+  } else {
+    var lastOpened = Date.now();
+  }
+  if (Watch.startTime == 0) {
+    var startTime2 = lastOpened;
+  } else {
+    var startTime2 = Watch.startTime;
+  }
   var retStr =
     "<div class='bodyTimer' id='" +
     Watch.id +
@@ -54,17 +73,17 @@ function StopWatchBody(Watch) {
     "<h2 class='jam' + id='watch" +
     Watch.id +
     "'>" +
-    GiveTimeString(Watch.curTime - Watch.startTime) +
+    GiveTimeString(lastOpened - startTime2 - Watch.timeDelays) +
     "</h2>" +
-    "<h2 class='total_jam' + id='watch" +
+    "<h2 class='total_jam' + id='total_jam" +
     Watch.id +
     "'>" +
-    "Total : " + GiveTimeString(Watch.curTime - Watch.startTime) +
+    GiveTimeStringTotal(lastOpened - startTime2 - Watch.timeDelays) +
     "</h2>" +
     "</div>" +
     "<div class='footer'>" +
     "<div class='btn-group btn-group-justified'>" +
-    pausePlayButtonStr(Watch.status) +
+    pausePlayButtonStr(Watch.isRunning) +
     "<button id='restart_btn' onclick='RestartClock(" +
     Watch.id +
     ")'>Restart</button>" +
@@ -76,24 +95,27 @@ function StopWatchBody(Watch) {
     "</div>" +
     "</div>" +
     "</div>";
-
   return retStr;
 }
 
 //creates a watch object
 function Watch(
-  status = 0,
+  isRunning = 0,
   title,
-  startTime = Date.now(),
-  curTime = Date.now()
+  startTime = 0,
+  timeDelays = 0,
+  pauseTime = 0,
+  continueTime = 0
 ) {
   if (title == null) title = document.getElementById("title").value;
   this.id = idCounter;
-  idCounter = idCounter + 1;
-  this.status = status; // 0 -> pause state 1 -> play state
+  idCounter += 1;
+  this.isRunning = isRunning; // 0 -> pause state 1 -> play state
   this.title = title;
   this.startTime = startTime;
-  this.curTime = curTime;
+  this.timeDelays = timeDelays;
+  this.pauseTime = pauseTime;
+  this.continueTime = continueTime;
 }
 
 //adds watch to DOM
@@ -103,13 +125,6 @@ function AddWatch() {
     StopWatchBody(listStopWatch[listStopWatch.length - 1])
   );
   document.getElementById("title").value = "";
-}
-
-function ShowList() {
-  console.log(listStopWatch);
-  // for(var i = 0; i < listStopWatch.length; i++) {
-  // 	console.log(listStopWatch[i].title);
-  // }
 }
 
 //removes a single clock when called
@@ -127,8 +142,14 @@ function RemoveOne(id) {
 function RestartClock(id) {
   for (var i = 0; i < listStopWatch.length; i++) {
     if (listStopWatch[i].id == id) {
-      listStopWatch[i].startTime = Date.now();
-      listStopWatch[i].curTime = Date.now();
+      if (listStopWatch[i].isRunning == 1) {
+        listStopWatch[i].startTime = Date.now();
+      } else {
+        listStopWatch[i].startTime = 0;
+      }
+      listStopWatch[i].pauseTime = 0;
+      listStopWatch[i].continueTime = 0;
+      listStopWatch[i].timeDelays = 0;
       document.getElementById("watch" + id).innerHTML = GiveTimeString(0);
     }
   }
@@ -137,17 +158,19 @@ function RestartClock(id) {
 function StopClock(id) {
   for (var i = 0; i < listStopWatch.length; i++) {
     if (listStopWatch[i].id == id) {
-      listStopWatch[i].startTime = Date.now();
-      listStopWatch[i].curTime = Date.now();
-      listStopWatch[i].status = 0;
+      listStopWatch[i].isRunning = 0;
+      listStopWatch[i].startTime = 0;
+      document.getElementById("watch" + id).innerHTML = GiveTimeString(0);
+      document.getElementById("total_jam" + id).style.color = 'white';
+      showTotal(total);
+      listStopWatch[i].timeDelays = 0;
+      listStopWatch[i].pauseTime = 0;
+      listStopWatch[i].continueTime = 0;
       StopWatchBody(listStopWatch[i].id);
       location.reload();
-      showTotal(total);
-      document.getElementById("watch" + id).innerHTML = GiveTimeString(0);
     }
   }
 }
-
 
 //for pause play
 function PausePlayToggle(elem, id) {
@@ -158,7 +181,8 @@ function PausePlayToggle(elem, id) {
       ")'>Play</button>";
     for (var i = 0; i < listStopWatch.length; i++) {
       if (listStopWatch[i].id == id) {
-        listStopWatch[i].status = 0;
+        listStopWatch[i].isRunning = 0;
+        listStopWatch[i].pauseTime = Date.now();
       }
     }
   } else if (elem.innerHTML == "Play") {
@@ -168,10 +192,20 @@ function PausePlayToggle(elem, id) {
       ")'>Pause</button>";
     for (var i = 0; i < listStopWatch.length; i++) {
       if (listStopWatch[i].id == id) {
-        listStopWatch[i].status = 1;
+        listStopWatch[i].isRunning = 1;
+        if (listStopWatch[i].startTime == 0) {//pertamakali
+          listStopWatch[i].startTime = Date.now();
+          listStopWatch[i].timeDelays = 0;
+          listStopWatch[i].pauseTime = 0;
+          listStopWatch[i].continueTime = 0;
+        } else {
+          listStopWatch[i].continueTime = Date.now();
+          listStopWatch[i].timeDelays = listStopWatch[i].timeDelays + (listStopWatch[i].continueTime - listStopWatch[i].pauseTime)
+        }
       }
-      else {
-        listStopWatch[i].status = 0;
+      else if(listStopWatch[i].isRunning == 1){
+          listStopWatch[i].pauseTime = Date.now();
+          listStopWatch[i].isRunning = 0;  
       }
     }
     location.reload();
@@ -180,6 +214,7 @@ function PausePlayToggle(elem, id) {
 
 //removes all clocks
 function RemoveAll() {
+  localStorage.clear();
   listStopWatch = [];
   idCounter = 1;
   $("#stopwatches").html("");
@@ -188,16 +223,22 @@ function RemoveAll() {
 //updates the time in clocks
 function updateClocks() {
   for (var i = 0; i < listStopWatch.length; i++) {
-    if (listStopWatch[i].status !== 0) {
-      listStopWatch[i].curTime += 1;
+    if (listStopWatch[i].isRunning !== 0) {
       var tempId = "watch" + listStopWatch[i].id;
+      var tempTotal = "total_jam" + listStopWatch[i].id;
       var tempModalId = "note" + listStopWatch[i].id;
       document.getElementById(tempId).innerHTML = GiveTimeString(
-        listStopWatch[i].curTime - listStopWatch[i].startTime
+        Date.now() - listStopWatch[i].startTime - listStopWatch[i].timeDelays
+      );
+      document.getElementById(tempTotal).innerHTML = GiveTimeStringTotal(
+        Date.now() - listStopWatch[i].startTime - listStopWatch[i].timeDelays
       );
       if (document.getElementById(tempModalId) !== null) {
         document.getElementById(tempModalId).innerHTML = GiveTimeString(
-          listStopWatch[i].curTime - listStopWatch[i].startTime
+          Date.now() - listStopWatch[i].startTime - listStopWatch[i].timeDelays
+        );
+        document.getElementById(tempTotal).innerHTML = GiveTimeStringTotal(
+          Date.now() - listStopWatch[i].startTime - listStopWatch[i].timeDelays
         );
       }
     }
@@ -216,13 +257,16 @@ window.onbeforeunload = function (e) {
 //load the list of stopwatches in listStopWatch and attach them to html is list is present in cookie.
 window.onload = function (e) {
   e = e || window.event;
+  localStorage.setItem('lastOpened', Date.now());
   var X = JSON.parse(localStorage.getItem("myCookie"));
   for (var i = 0; i < X.length; i++) {
     listStopWatch[listStopWatch.length] = new Watch(
-      X[i].status,
+      X[i].isRunning,
       X[i].title,
       X[i].startTime,
-      X[i].curTime
+      X[i].timeDelays,
+      X[i].pauseTime,
+      X[i].continueTime
     );
     $("#stopwatches").append(
       StopWatchBody(listStopWatch[listStopWatch.length - 1])
@@ -241,13 +285,12 @@ function detectEnter(event) {
 
 var addWatchButton = document.getElementById("addWatch-btn");
 addWatchButton.addEventListener("click", AddWatch);
-console.log(addWatchButton.textContent)
 
 var removeAllButton = document.getElementById("removeAll_btn");
 removeAllButton.addEventListener("click", RemoveAll);
-console.log(removeAllButton.textContent);
 
 const total = document.querySelector('#total_jam');
+
 function showTotal(Total) {
   Total.style.display = "block";
 }

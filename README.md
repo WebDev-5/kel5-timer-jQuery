@@ -116,7 +116,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repository
    ```sh
-   git clone https://github.com/WebDev-5/kel5-timer-javascript
+   git clone https://github.com/WebDev-5/kel5-timer-jQuery.git
    ```
 2. Open the `index.html` with your browser.
 3. Run application.
