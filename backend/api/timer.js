@@ -8,7 +8,6 @@ module.exports = function (app) {
                 if (error) {
                     throw error
                 }
-
                 res.status(200).json(results.rows)
             })
         })
@@ -25,5 +24,16 @@ module.exports = function (app) {
                 }
                 res.status(200).json("Timer created successfully")
             })
+        })
+
+        .delete((req, res) => {
+            const id = parseInt(req.params.id_timer)
+            
+            pool.query('DELETE FROM timer WHERE id = $1', [id], (error, results) => {
+                if (error) {
+                  throw error
+                }
+                res.status(200).send(`Timer deleted with ID: ${id}`)
+              })
         })
 }
