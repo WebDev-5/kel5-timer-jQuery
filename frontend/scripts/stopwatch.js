@@ -22,7 +22,7 @@ function GiveTimeStringTotal(theMilliseconds) {
   if (hrs < 10) hrs = hrs;
   if (mins < 10) mins = mins;
   if (secs < 10) secs = secs;
-  return "Total: " + hrs +" Hours " + mins +" Minutes " + secs +" Seconds ";
+  return "Total: " + hrs + " Hours " + mins + " Minutes " + secs + " Seconds ";
 }
 
 //returns html body for the watch
@@ -212,9 +212,9 @@ function PausePlayToggle(elem, id) {
           listStopWatch[i].timeDelays = listStopWatch[i].timeDelays + (listStopWatch[i].continueTime - listStopWatch[i].pauseTime)
         }
       }
-      else if(listStopWatch[i].isRunning == 1){
-          listStopWatch[i].pauseTime = Date.now();
-          listStopWatch[i].isRunning = 0;  
+      else if (listStopWatch[i].isRunning == 1) {
+        listStopWatch[i].pauseTime = Date.now();
+        listStopWatch[i].isRunning = 0;
       }
     }
     location.reload();
@@ -287,19 +287,23 @@ function fillModal(id) {
       watch = listStopWatch[i];
     }
   }
+
   if (watch == null) {
     console.log("error");
   }
+
   if (watch.isRunning == 0) {
     var lastOpened = watch.pauseTime;
   } else {
     var lastOpened = Date.now();
   }
+
   if (watch.startTime == 0) {
     var startTime2 = lastOpened;
   } else {
     var startTime2 = watch.startTime;
   }
+  
   retHtmlTitle = watch.title;
 
   retHtmlBody =

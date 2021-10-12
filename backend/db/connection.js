@@ -5,9 +5,9 @@ const DB_USERNAME = process.env.DB_USERNAME,
     DB_PASSWORD = process.env.DB_PASSWORD,
     DB_NAME = process.env.DB_NAME
 
-const { Client } = require('pg')
+const { Pool } = require('pg')
 
-const client = new Client({
+const pool = new Pool({
     host: "localhost",
     user: DB_USERNAME,
     port: 5432,
@@ -15,4 +15,4 @@ const client = new Client({
     database: DB_NAME
 })
 
-module.exports = client
+module.exports = pool
