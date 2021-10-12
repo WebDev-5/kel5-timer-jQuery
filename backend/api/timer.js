@@ -37,4 +37,29 @@ module.exports = function (app) {
                 res.status(200).send(`Timer deleted with ID: ${id}`)
             })
         })
+
+    app.route('/notes')
+        
+        .get((req, res) => {
+            pool.query(`SELECT * FROM notes`, (error, results) => {
+                if (error) {
+                    throw error
+                }
+                res.status(200).json(results.rows)
+            })
+        })
+
+        .post((req, res) => {
+            const notes = req.body;
+            const insertQuery = `INSERT INTO notes (id_notes, id_timer, content)
+                VALUES('${notes.id_notes}', '${notes.id_timer}', '${notes.content}')`
+
+            pool.query(insertQuery, (error, results) => {
+                if (error) {
+                    throw error
+                }
+                res.status(200).json("Notes created succesfully")
+            })
+        }
+    )
 }
