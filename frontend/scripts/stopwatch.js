@@ -245,6 +245,88 @@ function updateClocks() {
   }
 }
 
+//function to add note to the watch's list and reload the modal
+function AddNote(id) {
+  for (var i = 0; i < listStopWatch.length; i++) {
+    if (listStopWatch[i].id == id) {
+      listStopWatch[i].notes.push(document.getElementById("newNote").value);
+      fillModal(id);
+      break;
+    }
+  }
+}
+
+//function to remove note from list when cross button in list items is pressed
+function RemoveNote(elem, id, noteIndex) {
+  for (var i = 0; i < listStopWatch.length; i++) {
+    if (listStopWatch[i].id == id) {
+      listStopWatch[i].notes.splice(noteIndex, 1);
+      elem.outerHTML = "";
+    }
+  }
+}
+
+//function to fill the modal dynamically when a note button is called
+function fillModal(id) {
+  var watch = null;
+  var retHtmlTitle = "";
+  var retHtmlBody = "";
+  var retHtmlFooter = "";
+
+  for (var i = 0; i < listStopWatch.length; i++) {
+    if (listStopWatch[i].id == id) {
+      watch = listStopWatch[i];
+    }
+  }
+  if (watch == null) {
+    console.log("error");
+  }
+
+  retHtmlTitle = watch.title;
+
+  retHtmlBody =
+    retHtmlBody +
+    "<h2 class='text-center' + id='note" +
+    watch.id +
+    "'>" +
+    GiveTimeString(watch.curTime - watch.startTime) +
+    "</h2>" +
+    "<hr>";
+
+  retHtmlBody += "<ul class='list-group'>";
+  for (var i = 0; i < watch.notes.length; i++) {
+    retHtmlBody +=
+      "<li class='row list-group-item'>" +
+      "<p class='col-md-11 list-item'>" +
+      watch.notes[i] +
+      "</p>" +
+      "<span class='col-md-1 glyphicon glyphicon-remove pull-right' onclick='RemoveNote(this.parentNode, " +
+      watch.id +
+      ", " +
+      i +
+      ")'>" +
+      "</span>" +
+      "</li>";
+  }
+  retHtmlBody += "</ul>";
+
+  retHtmlFooter +=
+    "<div class='input-group'>" +
+    "<input type='text' name='noteText' class='form-control' id='newNote' placeholder='Write Note' onKeyDown='if(event.which==13) AddNote(" +
+    watch.id +
+    ")' />" +
+    "<span class='input-group-btn'>" +
+    "<button onclick='AddNote(" +
+    watch.id +
+    ")' class='form-control btn btn-primary'><span class='glyphicon glyphicon-plus'></span> Add Note </button>" +
+    "</span>" +
+    "</div>";
+
+  $("#notesModalTitle").html(retHtmlTitle);
+  $("#notesModalBody").html(retHtmlBody);
+  $("#notesModalFooter").html(retHtmlFooter);
+}
+
 //clocks get updated each second because of this
 setInterval(updateClocks, 1000);
 
