@@ -334,7 +334,7 @@ function fillModal(id) {
     watch.id +
     ")' />" +
     "<span class='input-group-btn'>" +
-    "<button onclick='AddNote(" +
+    "<button id='add_note' onclick='AddNote(" +
     watch.id +
     ")' class='form-control btn btn-primary'><span class='glyphicon glyphicon-plus'></span> Add Note </button>" +
     "</span>" +

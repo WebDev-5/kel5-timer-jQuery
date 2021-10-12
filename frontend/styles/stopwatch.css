@@ -108,7 +108,6 @@ input[type = "submit"]:hover{
   padding-left: 15px;
   width: 570px;
   float: left;
-
 }
 
 .head{
@@ -242,10 +241,15 @@ button:focus {
 }
 
 #note_btn {
-  background: #FF5C58;
+  background: orange;
   text-align: center;
   float: right;
   margin-right: 10px;
+}
+
+#add_note {
+  background: #63B4B8;
+  text-align: center;
 }
 
 #remove_btn1 {
