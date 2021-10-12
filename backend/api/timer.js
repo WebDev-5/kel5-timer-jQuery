@@ -62,4 +62,16 @@ module.exports = function (app) {
             })
         }
     )
+
+    app.route('/notes/:id_notes')
+        .delete((req, res) => {
+            const id = parseInt(req.params.id_notes)
+
+            pool.query('DELETE FROM notes WHERE id_notes = $1', [id], (error, results) => {
+                if (error) {
+                    throw error
+                }
+                res.status(200).send(`Notes deleted with ID: ${id}`)
+            })
+        })
 }
