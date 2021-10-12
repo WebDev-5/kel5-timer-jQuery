@@ -64,9 +64,16 @@ function StopWatchBody(Watch) {
     Watch.title +
     "</h3>" +
     "</div>" +
+    "<div class='Notes'>" +
     "<button id='remove_btn' onclick='RemoveOne(" +
     Watch.id +
     ")'>X</button>" +
+    "<button type='button' id='note_btn' data-toggle='modal' data-target='#notesModal' onclick='fillModal(" +
+    Watch.id +
+    ")'>" +
+    " Notes" +
+    "</button>" +
+    "</div>" +
     "</div>" +
     "</div>" +
     "<div class='body'>" +
@@ -105,7 +112,8 @@ function Watch(
   startTime = 0,
   timeDelays = 0,
   pauseTime = 0,
-  continueTime = 0
+  continueTime = 0,
+  notes = []
 ) {
   if (title == null) title = document.getElementById("title").value;
   this.id = idCounter;
@@ -116,6 +124,7 @@ function Watch(
   this.timeDelays = timeDelays;
   this.pauseTime = pauseTime;
   this.continueTime = continueTime;
+  this.notes = notes;
 }
 
 //adds watch to DOM
@@ -281,7 +290,16 @@ function fillModal(id) {
   if (watch == null) {
     console.log("error");
   }
-
+  if (watch.isRunning == 0) {
+    var lastOpened = watch.pauseTime;
+  } else {
+    var lastOpened = Date.now();
+  }
+  if (watch.startTime == 0) {
+    var startTime2 = lastOpened;
+  } else {
+    var startTime2 = watch.startTime;
+  }
   retHtmlTitle = watch.title;
 
   retHtmlBody =
@@ -289,7 +307,7 @@ function fillModal(id) {
     "<h2 class='text-center' + id='note" +
     watch.id +
     "'>" +
-    GiveTimeString(watch.curTime - watch.startTime) +
+    GiveTimeString(lastOpened - startTime2 - watch.timeDelays) +
     "</h2>" +
     "<hr>";
 
