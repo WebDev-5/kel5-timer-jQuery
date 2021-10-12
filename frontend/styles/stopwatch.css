@@ -105,9 +105,9 @@ input[type = "submit"]:hover{
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
-
+  width: 570px;
   float: left;
-  /* width: 580px; */
+
 }
 
 .head{
@@ -218,18 +218,18 @@ button:focus {
 
 #start_btn {
   background: #5CDB95;
-  width: 172px;
+  width: 166px;
 }
 
 #pause_btn {
   background: orange;
-  width: 172px;
+  width: 166px;
    /* display: none; */
 }
 
 #restart_btn {
   background: #63B4B8;
-  width: 172px;
+  width: 166px;
   /* display: none; */
 }
 
@@ -242,7 +242,7 @@ button:focus {
 
 #remove_btn1 {
   background: #FF5C58;
-  width: 172px;
+  width: 166px;
 }
 
 
