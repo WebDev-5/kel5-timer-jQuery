@@ -115,9 +115,12 @@ function Watch(
   continueTime = 0,
   notes = []
 ) {
-  if (title == null) title = document.getElementById("title").value;
+  if (title == null)
+    title = document.getElementById("title").value;
+
   this.id = idCounter;
   idCounter += 1;
+
   this.isRunning = isRunning; // 0 -> pause state 1 -> play state
   this.title = title;
   this.startTime = startTime;
@@ -128,11 +131,15 @@ function Watch(
 }
 
 //adds watch to DOM
-function AddWatch() {
+function AddWatch(e) {
+  e.preventDefault();
+
   listStopWatch[listStopWatch.length] = new Watch();
+
   $("#stopwatches").append(
     StopWatchBody(listStopWatch[listStopWatch.length - 1])
   );
+
   document.getElementById("title").value = "";
 }
 
@@ -176,7 +183,6 @@ function StopClock(id) {
       listStopWatch[i].pauseTime = 0;
       listStopWatch[i].continueTime = 0;
       StopWatchBody(listStopWatch[i].id);
-      location.reload();
     }
   }
 }
@@ -217,7 +223,6 @@ function PausePlayToggle(elem, id) {
         listStopWatch[i].isRunning = 0;
       }
     }
-    location.reload();
   }
 }
 
@@ -303,7 +308,7 @@ function fillModal(id) {
   } else {
     var startTime2 = watch.startTime;
   }
-  
+
   retHtmlTitle = watch.title;
 
   retHtmlBody =
@@ -353,16 +358,66 @@ function fillModal(id) {
 setInterval(updateClocks, 1000);
 
 //store the list of stopwatches in the cookie so that reloading the page does not cause data to loss
-window.onbeforeunload = function (e) {
-  e = e || window.event;
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+
+  // set stopwatch to local storage
   localStorage.setItem("myCookie", JSON.stringify(listStopWatch));
-};
+
+  // remove stopwatch in database
+  fetch('http://localhost:8000/timer', {
+    method: "DELETE",
+  })
+    .then((res) => {
+      localStorage.setItem("message", res);
+    })
+    .catch((err) => {
+      localStorage.setItem("message", err);
+    })
+
+  // add stopwatch to database
+  const stopwatch = listStopWatch[0];
+  const data = {
+    id_timer: stopwatch.id,
+    status: stopwatch.isRunning,
+    title: stopwatch.title,
+    start_time: stopwatch.startTime,
+    last_pause: stopwatch.pauseTime,
+    delays: stopwatch.timeDelays,
+    last_continue: stopwatch.continueTime
+  }
+
+  fetch('http://localhost:8000/timer', {
+    method: "POST",
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((res) => {
+      localStorage.setItem("message", res);
+    })
+    .catch((err) => {
+      localStorage.setItem("message", err);
+    })
+});
 
 //load the list of stopwatches in listStopWatch and attach them to html is list is present in cookie.
-window.onload = function (e) {
+window.onload = async function (e) {
   e = e || window.event;
+
   localStorage.setItem('lastOpened', Date.now());
-  var X = JSON.parse(localStorage.getItem("myCookie"));
+
+  try {
+    var res = await fetch('http://localhost:8000/timer');
+    res = await res.json();
+
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
+
+  var X = res;
   for (var i = 0; i < X.length; i++) {
     listStopWatch[listStopWatch.length] = new Watch(
       X[i].isRunning,

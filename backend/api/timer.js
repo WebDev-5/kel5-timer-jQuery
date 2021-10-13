@@ -14,14 +14,25 @@ module.exports = function (app) {
 
         .post((req, res) => {
             const timer = req.body;
-            const insertQuery = `CALL addTimer('${timer.id_timer}', '${timer.status}', '${timer.title}', '${timer.start_time}',
-                    '${timer.last_pause}', '${timer.last_continue}', '${timer.delays}')`
-
+            const insertQuery = `INSERT INTO timer VALUES (${timer.id_timer}, ${timer.status}, '${timer.title}', ${timer.start_time}, ${timer.last_pause}, ${timer.delays}, ${timer.last_continue})`;
+            
             pool.query(insertQuery, (error, results) => {
                 if (error) {
                     throw error
                 }
+
                 res.status(200).json("Timer created successfully")
+            })
+        })
+
+        .delete((req, res) => {
+            const timer = req.body;
+            const deleteQuery = `DELETE FROM timer`
+
+            pool.query(deleteQuery, (error, results) => {
+                if (error) {
+                    throw error
+                }
             })
         })
 
