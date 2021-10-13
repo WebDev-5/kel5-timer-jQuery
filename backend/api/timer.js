@@ -14,8 +14,7 @@ module.exports = function (app) {
 
         .post((req, res) => {
             const timer = req.body;
-            const insertQuery = `INSERT INTO timer (id_timer, status, title, start_time, last_pause, last_continue, delays)
-                    VALUES('${timer.id_timer}', '${timer.status}', '${timer.title}', '${timer.start_time}',
+            const insertQuery = `CALL addTimer('${timer.id_timer}', '${timer.status}', '${timer.title}', '${timer.start_time}',
                     '${timer.last_pause}', '${timer.last_continue}', '${timer.delays}')`
 
             pool.query(insertQuery, (error, results) => {
@@ -29,8 +28,9 @@ module.exports = function (app) {
     app.route('/timer/:id_timer')
         .delete((req, res) => {
             const id = parseInt(req.params.id_timer)
+            const deleteQuery = `CALL deleteTimer('${id}')`
 
-            pool.query('DELETE FROM timer WHERE id_timer = $1', [id], (error, results) => {
+            pool.query(deleteQuery, (error, results) => {
                 if (error) {
                     throw error
                 }
@@ -50,8 +50,7 @@ module.exports = function (app) {
 
         .post((req, res) => {
             const notes = req.body;
-            const insertQuery = `INSERT INTO notes (id_notes, id_timer, content)
-                VALUES('${notes.id_notes}', '${notes.id_timer}', '${notes.content}')`
+            const insertQuery = `CALL addNote('${notes.id_notes}', '${notes.id_timer}', '${notes.content}')`
 
             pool.query(insertQuery, (error, results) => {
                 if (error) {
@@ -64,8 +63,9 @@ module.exports = function (app) {
     app.route('/notes/:id_notes')
         .delete((req, res) => {
             const id = parseInt(req.params.id_notes)
+            const deleteQuery = `CALL deleteNote('${id}')`
 
-            pool.query('DELETE FROM notes WHERE id_notes = $1', [id], (error, results) => {
+            pool.query(deleteQuery, (error, results) => {
                 if (error) {
                     throw error
                 }
