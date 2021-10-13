@@ -3,49 +3,29 @@
 
 <head>
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ <!-- Latest compiled and minified CSS -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+ integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  <!-- Link for jquery required for bootstrap -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Link for jquery required for bootstrap -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-    </script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+ </script>
 
   <title> Multiple Stopwatch </title>
-  <link rel="shortcut icon" href="frontend/images/icon.png" />
+  <link rel="shortcut icon" href="images/icon.png" />
   <link rel="stylesheet" type="text/css" href="frontend/styles/stopwatch.css">
 	<link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Baloo Chettan 2' rel='stylesheet'>
 </head>
 
-<!-- Modal for showing Notes-->
-<div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="notesModalTitle">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-        <h2 class="modal-title text-center"><strong id="notesModalTitle">to be filled by function </strong></h2>
-      </div>
-      <div class="modal-body" id="notesModalBody">
-        <p> to be filled by function</p>
-      </div>
-      <hr>
-      <div class="modal-footer" id="notesModalFooter">
-        <p> to be filled by function </p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <body class='container'>
   <div class="row">
     <div class="container-fluid baloo-font">
-      <h1 class="page-header text-center">STOPWATCH</h1>
+      <h1 class="page-header text-center">MULTIPLE STOPWATCH</h1>
       <form class="text-center">
         <input id='title' type="text" class="baloo-font" placeholder="Enter Title for Stopwatch ...">
         <input id="addWatch-btn" type="submit" class="baloo-font" value="ADD">
@@ -56,6 +36,11 @@
   </div>
   <div id="stopwatches">
     
+  </div>
+  <div class='footer2'>
+    <div class='license'>
+      <p>Copyrights © 2021 Webdev5 - All Right Reserved</p>
+    </div>
   </div>
 
   <script src="frontend/scripts/stopwatch.js"></script>
