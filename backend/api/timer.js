@@ -26,7 +26,7 @@ module.exports = function (app) {
             })
         })
 
-        app.route('/timer/:id_timer')
+    app.route('/timer/:id_timer')
         .delete((req, res) => {
             const id = parseInt(req.params.id_timer)
 
@@ -39,7 +39,6 @@ module.exports = function (app) {
         })
 
     app.route('/notes')
-        
         .get((req, res) => {
             pool.query(`SELECT * FROM notes`, (error, results) => {
                 if (error) {
@@ -60,8 +59,7 @@ module.exports = function (app) {
                 }
                 res.status(200).json("Notes created succesfully")
             })
-        }
-    )
+        })
 
     app.route('/notes/:id_notes')
         .delete((req, res) => {

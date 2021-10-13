@@ -25,8 +25,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/WebDev-5/kel5-timer-javascript">
-    <img src="frontend/images/icon.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/WebDev-5/kel5-timer-jQuery">
+    <img src="frontend/assets/images/icon.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Multi Stopwatch Kelompok 5</h3>
@@ -34,14 +34,14 @@
   <p align="center">
     An awesome Stopwatch to manage your time!
     <br />
-    <a href="https://github.com/WebDev-5/kel5-timer-javascript"><strong>Open Application »</strong></a>
+    <a href="https://github.com/WebDev-5/kel5-timer-jQuery"><strong>Open Application »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/WebDev-5/kel5-timer-javascript">View Demo</a>
+    <a href="https://github.com/WebDev-5/kel5-timer-jQuery">View Demo</a>
     ·
-    <a href="https://github.com/WebDev-5/kel5-timer-javascript/issues">Report Bug</a>
+    <a href="https://github.com/WebDev-5/kel5-timer-jQuery/issues">Report Bug</a>
     ·
-    <a href="https://github.com/WebDev-5/kel5-timer-javascript/issues">Request Feature</a>
+    <a href="https://github.com/WebDev-5/kel5-timer-jQuery/issues">Request Feature</a>
   </p>
 </div>
 
@@ -77,18 +77,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/WebDev-5/kel5-timer-jQuery)
 
 Multi Stopwatch is an application that was built to fulfill a mini project assignment for Web Development course, which was developed by Webdev Kelompok 5 D4 2019 Politeknik Negeri Bandung.
-This an application that is a simulation of a stopwatch or timer, which can be used to calculate and set the time for each activity you do. This application is built using HTML, CSS, and Vanilla Javascript. 
+This an application that is a simulation of a stopwatch or timer, which can be used to calculate and set the time for each activity you do. This application is built using HTML, CSS, Node.js, Axios, and PostgreSQL. 
 Still remember, take advantage and don't waste your time!
 
 The following are the features of this application :
 1. Play, Pause, Restart and Stop.
 2. Added a title for each timer.
-3. Multi-timer feature, which supports multiple activities. And they will not run in parallel.
-4. Keep running in the background, even if the application is closed.
-5. Displays the total time taken.
+3. Added some notes for each timer.
+4. Multi-timer feature, which supports multiple activities. And they will not run in parallel.
+5. Keep running in the background, even if the application is closed.
+6. Displays the total time taken.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -100,7 +101,9 @@ The following are the frameworks and libraries that build this application :
 
 * [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/)
 * [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-* [Vanilla.js](http://vanilla-js.com/)
+* [Node.js](https://nodejs.org/)
+* [Axios](https://axios-http.com/docs/intro)
+* [PostgreSQL](https://www.postgresql.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -116,7 +119,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repository
    ```sh
-   git clone https://github.com/WebDev-5/kel5-timer-jQuery.git
+   git clone https://github.com/WebDev-5/kel5-timer-jQuery
    ```
 2. Open the `index.html` with your browser.
 3. Run application.
@@ -137,6 +140,10 @@ To use this application, you can :
 6. Use the `x` in the corner to close and remove the timer.
 7.  Use the `Remove All`  to close and remove the all timers.
 
+For example :
+
+[![Watch the video](frontend/assets/video/demo.gif)](https://github.com/WebDev-5/kel5-timer-jQuery)
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -151,8 +158,9 @@ To use this application, you can :
 - [x] Add local storage to keep running in the background.
 - [x] Add multiple timer feature.
 - [x] Fix and update local storage.  
+- [x] Fix and remove display bug. 
 
-See the [open issues](https://github.com/WebDev-5/kel5-timer-javascript/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/WebDev-5/kel5-timer-jQuery/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -179,7 +187,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [LICENSE.md](https://github.com/WebDev-5/kel5-timer-javascript/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE.md](https://github.com/WebDev-5/kel5-timer-jQuery/blob/main/LICENSE.md) for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -195,7 +203,7 @@ Distributed under the MIT License. See [LICENSE.md](https://github.com/WebDev-5/
 * [Nabil Putra Hadiyani](https://github.com/nabilputrah)
 * [Shinta Nurkaafi](https://github.com/NurMeiTaa)
 
-Project Link: [Multi Stopwatch Kelompok 5](https://github.com/WebDev-5/kel5-timer-javascript)
+Project Link: [Multiple Stopwatch Kelompok 5](https://github.com/WebDev-5/kel5-timer-jQuery)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -217,13 +225,13 @@ Use this space to list resources you find helpful and would like to give credit 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/badge/CONTRIBUTORS-6-blue?style=for-the-badge&logo=appveyor
-[contributors-url]: https://github.com/WebDev-5/kel5-timer-javascript/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/WebDev-5/kel5-timer-javascript?style=for-the-badge&logo=appveyor
-[forks-url]: https://github.com/WebDev-5/kel5-timer-javascript/network/members
-[stars-shield]: https://img.shields.io/github/stars/WebDev-5/kel5-timer-javascript?style=for-the-badge&logo=appveyor
-[stars-url]: https://github.com/WebDev-5/kel5-timer-javascript/stargazers
-[issues-shield]: https://img.shields.io/github/issues/WebDev-5/kel5-timer-javascript?style=for-the-badge&logo=appveyor
-[issues-url]: https://github.com/WebDev-5/kel5-timer-javascript/issues
-[license-shield]: https://img.shields.io/github/license/WebDev-5/kel5-timer-javascript?style=for-the-badge&logo=appveyor
-[license-url]: https://github.com/WebDev-5/kel5-timer-javascript/blob/main/LICENSE.md
-[product-screenshot]: frontend/images/screenshot.png
+[contributors-url]: https://github.com/WebDev-5/kel5-timer-jQuery/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/WebDev-5/kel5-timer-jQuery?style=for-the-badge&logo=appveyor
+[forks-url]: https://github.com/WebDev-5/kel5-timer-jQuery/network/members
+[stars-shield]: https://img.shields.io/github/stars/WebDev-5/kel5-timer-jQuery?style=for-the-badge&logo=appveyor
+[stars-url]: https://github.com/WebDev-5/kel5-timer-jQuery/stargazers
+[issues-shield]: https://img.shields.io/github/issues/WebDev-5/kel5-timer-jQuery?style=for-the-badge&logo=appveyor
+[issues-url]: https://github.com/WebDev-5/kel5-timer-jQuery/issues
+[license-shield]: https://img.shields.io/github/license/WebDev-5/kel5-timer-jQuery?style=for-the-badge&logo=appveyor
+[license-url]: https://github.com/WebDev-5/kel5-timer-jQuery/blob/main/LICENSE.md
+[product-screenshot]: frontend/assets/images/screenshot.png
