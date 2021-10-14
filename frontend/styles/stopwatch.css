@@ -100,13 +100,12 @@ input[type = "submit"]:hover{
 .bodyTimer {
   border : 3px solid #D6F1F2;
   border-radius: 24px;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 10px;
   position: relative;
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
-  width: 570px;
+  width: 550px;
   float: left;
 }
 
@@ -218,18 +217,19 @@ button:focus {
 
 #start_btn {
   background: #5CDB95;
-  width: 166px;
+  width: 160px;
 }
 
 #pause_btn {
   background: orange;
-  width: 166px;
+  width: 160px;
    /* display: none; */
+
 }
 
 #restart_btn {
   background: #63B4B8;
-  width: 166px;
+  width: 160px;
   /* display: none; */
 }
 
@@ -254,7 +254,7 @@ button:focus {
 
 #remove_btn1 {
   background: #FF5C58;
-  width: 166px;
+  width: 160px;
 }
 
 #removeAll_btn{
