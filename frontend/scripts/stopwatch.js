@@ -5,7 +5,7 @@ var idCounter = 1; //gives id to the watch object
 //given time in seconds returns a string in format hh:mm:ss
 function GiveTimeString(theMilliseconds) {
   var secs = Math.floor(theMilliseconds / 1000);
-  var mins = Math.floor(secs / 60);
+  var mins = Math.floor(secs / 60) % 60;
   var hrs = Math.floor(secs / 3600);
   secs = secs % 60
   if (hrs < 10) hrs = "0" + hrs;
@@ -14,15 +14,13 @@ function GiveTimeString(theMilliseconds) {
   return hrs + ":" + mins + ":" + secs;
 }
 
+//given time total returns a string in format hh:mm:ss
 function GiveTimeStringTotal(theMilliseconds) {
   var secs = Math.floor(theMilliseconds / 1000);
-  var mins = Math.floor(secs / 60);
-  var hrs = Math.floor(secs / 3600);
-  secs = secs % 60
-  if (hrs < 10) hrs = hrs;
-  if (mins < 10) mins = mins;
-  if (secs < 10) secs = secs;
-  return "Total: " + hrs + " Hours " + mins + " Minutes " + secs + " Seconds ";
+  return "Total: "
+    + Math.floor(secs / 3600) + " Hours "
+    + Math.floor(secs / 60) % 60 + " Minutes "
+    + secs % 60 + " Seconds ";
 }
 
 //returns html body for the watch
@@ -30,16 +28,16 @@ function StopWatchBody(Watch) {
   var pausePlayButtonStr = function (isRunning) {
     if (isRunning == 1) {
       return (
-        "<button id='pause_btn' onclick='PausePlayToggle(this, " +
+        "<button id='pause_btn" + Watch.id + "' onclick='PausePlayToggle(this, " +
         Watch.id +
-        ")'>Pause</button>"
+        ")' style='background: orange; width: 172px;'>Pause</button>"
       );
     }
     else {
       return (
-        "<button id='start_btn' onclick='PausePlayToggle(this, " +
+        "<button id='start_btn" + Watch.id + "' onclick='PausePlayToggle(this, " +
         Watch.id +
-        ")'>Play</button>"
+        ")' style='background: #5CDB95; width: 172px;'>Play</button>"
       );
     }
   };
@@ -64,16 +62,9 @@ function StopWatchBody(Watch) {
     Watch.title +
     "</h3>" +
     "</div>" +
-    "<div class='Notes'>" +
     "<button id='remove_btn' onclick='RemoveOne(" +
     Watch.id +
     ")'>X</button>" +
-    "<button type='button' id='note_btn' data-toggle='modal' data-target='#notesModal' onclick='fillModal(" +
-    Watch.id +
-    ")'>" +
-    " Notes" +
-    "</button>" +
-    "</div>" +
     "</div>" +
     "</div>" +
     "<div class='body'>" +
@@ -112,34 +103,25 @@ function Watch(
   startTime = 0,
   timeDelays = 0,
   pauseTime = 0,
-  continueTime = 0,
-  notes = []
+  continueTime = 0
 ) {
-  if (title == null)
-    title = document.getElementById("title").value;
-
+  if (title == null) title = document.getElementById("title").value;
   this.id = idCounter;
   idCounter += 1;
-
   this.isRunning = isRunning; // 0 -> pause state 1 -> play state
   this.title = title;
   this.startTime = startTime;
   this.timeDelays = timeDelays;
   this.pauseTime = pauseTime;
   this.continueTime = continueTime;
-  this.notes = notes;
 }
 
 //adds watch to DOM
-function AddWatch(e) {
-  e.preventDefault();
-
+function AddWatch() {
   listStopWatch[listStopWatch.length] = new Watch();
-
-  $("#stopwatches").append(
+  document.getElementById("#stopwatches").append(
     StopWatchBody(listStopWatch[listStopWatch.length - 1])
   );
-
   document.getElementById("title").value = "";
 }
 
@@ -171,14 +153,20 @@ function RestartClock(id) {
   }
 }
 
+//stop the time for one clock
 function StopClock(id) {
+  try {
+    document.querySelector("#pause_btn" + id).innerHTML = "Play";
+    document.querySelector("#pause_btn" + id).setAttribute('style', "background: #5CDB95; width: 172px;");
+    document.querySelector("#pause_btn" + id).setAttribute('id', "start_btn" + id);
+  } catch (err) {
+  }
   for (var i = 0; i < listStopWatch.length; i++) {
     if (listStopWatch[i].id == id) {
-      listStopWatch[i].isRunning = 0;
       listStopWatch[i].startTime = 0;
-      document.getElementById("watch" + id).innerHTML = GiveTimeString(0);
-      document.getElementById("total_jam" + id).style.color = 'white';
-      showTotal(total);
+      document.querySelector("#watch" + id).innerHTML = GiveTimeString(0);
+      document.querySelector("#total_jam" + id).style.color = 'white';
+      listStopWatch[i].isRunning = 0;
       listStopWatch[i].timeDelays = 0;
       listStopWatch[i].pauseTime = 0;
       listStopWatch[i].continueTime = 0;
@@ -187,13 +175,12 @@ function StopClock(id) {
   }
 }
 
-//for pause play
+//for pause and play
 function PausePlayToggle(elem, id) {
   if (elem.innerHTML == "Pause") {
-    elem.outerHTML =
-      "<button id='start_btn' onclick='PausePlayToggle(this, " +
-      id +
-      ")'>Play</button>";
+    document.querySelector("#pause_btn" + id).setAttribute('style', "background: #5CDB95; width: 172px;");
+    document.querySelector("#pause_btn" + id).setAttribute('id', "start_btn" + id);
+    document.querySelector("#start_btn" + id).innerHTML = "Play";
     for (var i = 0; i < listStopWatch.length; i++) {
       if (listStopWatch[i].id == id) {
         listStopWatch[i].isRunning = 0;
@@ -201,14 +188,14 @@ function PausePlayToggle(elem, id) {
       }
     }
   } else if (elem.innerHTML == "Play") {
-    elem.outerHTML =
-      "<button id='pause_btn' onclick='PausePlayToggle(this, " +
-      id +
-      ")'>Pause</button>";
+    document.querySelector("#total_jam" + id).style.color = '#63B4B8';
+    document.querySelector("#start_btn" + id).setAttribute('style', "background: orange; width: 172px;");
+    document.querySelector("#start_btn" + id).setAttribute('id', "pause_btn" + id);
+    document.querySelector("#pause_btn" + id).innerHTML = "Pause";
     for (var i = 0; i < listStopWatch.length; i++) {
       if (listStopWatch[i].id == id) {
         listStopWatch[i].isRunning = 1;
-        if (listStopWatch[i].startTime == 0) {//pertamakali
+        if (listStopWatch[i].startTime == 0) {
           listStopWatch[i].startTime = Date.now();
           listStopWatch[i].timeDelays = 0;
           listStopWatch[i].pauseTime = 0;
@@ -218,9 +205,12 @@ function PausePlayToggle(elem, id) {
           listStopWatch[i].timeDelays = listStopWatch[i].timeDelays + (listStopWatch[i].continueTime - listStopWatch[i].pauseTime)
         }
       }
-      else if (listStopWatch[i].isRunning == 1) {
+      else if (listStopWatch[i].isRunning == 1 && listStopWatch[i].id != id) {
         listStopWatch[i].pauseTime = Date.now();
         listStopWatch[i].isRunning = 0;
+        document.querySelector("#pause_btn" + listStopWatch[i].id).innerHTML = "Play";
+        document.querySelector("#pause_btn" + listStopWatch[i].id).setAttribute('style', "background: #5CDB95; width: 172px;");
+        document.querySelector("#pause_btn" + listStopWatch[i].id).setAttribute('id', "start_btn" + listStopWatch[i].id);
       }
     }
   }
@@ -231,7 +221,7 @@ function RemoveAll() {
   localStorage.clear();
   listStopWatch = [];
   idCounter = 1;
-  $("#stopwatches").html("");
+  document.getElementById("#stopwatches").html("");
 }
 
 //updates the time in clocks
@@ -259,165 +249,19 @@ function updateClocks() {
   }
 }
 
-//function to add note to the watch's list and reload the modal
-function AddNote(id) {
-  for (var i = 0; i < listStopWatch.length; i++) {
-    if (listStopWatch[i].id == id) {
-      listStopWatch[i].notes.push(document.getElementById("newNote").value);
-      fillModal(id);
-      break;
-    }
-  }
-}
-
-//function to remove note from list when cross button in list items is pressed
-function RemoveNote(elem, id, noteIndex) {
-  for (var i = 0; i < listStopWatch.length; i++) {
-    if (listStopWatch[i].id == id) {
-      listStopWatch[i].notes.splice(noteIndex, 1);
-      elem.outerHTML = "";
-    }
-  }
-}
-
-//function to fill the modal dynamically when a note button is called
-function fillModal(id) {
-  var watch = null;
-  var retHtmlTitle = "";
-  var retHtmlBody = "";
-  var retHtmlFooter = "";
-
-  for (var i = 0; i < listStopWatch.length; i++) {
-    if (listStopWatch[i].id == id) {
-      watch = listStopWatch[i];
-    }
-  }
-
-  if (watch == null) {
-    console.log("error");
-  }
-
-  if (watch.isRunning == 0) {
-    var lastOpened = watch.pauseTime;
-  } else {
-    var lastOpened = Date.now();
-  }
-
-  if (watch.startTime == 0) {
-    var startTime2 = lastOpened;
-  } else {
-    var startTime2 = watch.startTime;
-  }
-
-  retHtmlTitle = watch.title;
-
-  retHtmlBody =
-    retHtmlBody +
-    "<h2 class='text-center' + id='note" +
-    watch.id +
-    "'>" +
-    GiveTimeString(lastOpened - startTime2 - watch.timeDelays) +
-    "</h2>" +
-    "<hr>";
-
-  retHtmlBody += "<ul class='list-group'>";
-  for (var i = 0; i < watch.notes.length; i++) {
-    retHtmlBody +=
-      "<li class='row list-group-item'>" +
-      "<p class='col-md-11 list-item'>" +
-      watch.notes[i] +
-      "</p>" +
-      "<span class='col-md-1 glyphicon glyphicon-remove pull-right' onclick='RemoveNote(this.parentNode, " +
-      watch.id +
-      ", " +
-      i +
-      ")'>" +
-      "</span>" +
-      "</li>";
-  }
-  retHtmlBody += "</ul>";
-
-  retHtmlFooter +=
-    "<div class='input-group'>" +
-    "<input type='text' name='noteText' class='form-control' id='newNote' placeholder='Write Note' onKeyDown='if(event.which==13) AddNote(" +
-    watch.id +
-    ")' />" +
-    "<span class='input-group-btn'>" +
-    "<button id='add_note' onclick='AddNote(" +
-    watch.id +
-    ")' class='form-control btn btn-primary'><span class='glyphicon glyphicon-plus'></span> Add Note </button>" +
-    "</span>" +
-    "</div>";
-
-  $("#notesModalTitle").html(retHtmlTitle);
-  $("#notesModalBody").html(retHtmlBody);
-  $("#notesModalFooter").html(retHtmlFooter);
-}
-
 //clocks get updated each second because of this
 setInterval(updateClocks, 1000);
 
 //store the list of stopwatches in the cookie so that reloading the page does not cause data to loss
-window.addEventListener('beforeunload', function (e) {
-  e.preventDefault();
-
-  // set stopwatch to local storage
-  localStorage.setItem("myCookie", JSON.stringify(listStopWatch));
-
-  // remove stopwatch in database
-  fetch('http://localhost:8000/timer', {
-    method: "DELETE",
-  })
-    .then((res) => {
-      localStorage.setItem("message", res);
-    })
-    .catch((err) => {
-      localStorage.setItem("message", err);
-    })
-
-  // add stopwatch to database
-  const stopwatch = listStopWatch[0];
-  const data = {
-    id_timer: stopwatch.id,
-    status: stopwatch.isRunning,
-    title: stopwatch.title,
-    start_time: stopwatch.startTime,
-    last_pause: stopwatch.pauseTime,
-    delays: stopwatch.timeDelays,
-    last_continue: stopwatch.continueTime
-  }
-
-  fetch('http://localhost:8000/timer', {
-    method: "POST",
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8'
-    },
-    body: JSON.stringify(data)
-  })
-    .then((res) => {
-      localStorage.setItem("message", res);
-    })
-    .catch((err) => {
-      localStorage.setItem("message", err);
-    })
-});
-
-//load the list of stopwatches in listStopWatch and attach them to html is list is present in cookie.
-window.onload = async function (e) {
+window.onbeforeunload = function (e) {
   e = e || window.event;
+  localStorage.setItem("myCookie", JSON.stringify(listStopWatch));
+};
 
+window.onload = function (e) {
+  e = e || window.event;
   localStorage.setItem('lastOpened', Date.now());
-
-  try {
-    var res = await fetch('http://localhost:8000/timer');
-    res = await res.json();
-
-    console.log(res);
-  } catch (e) {
-    console.log(e);
-  }
-
-  var X = res;
+  var X = JSON.parse(localStorage.getItem("myCookie"));
   for (var i = 0; i < X.length; i++) {
     listStopWatch[listStopWatch.length] = new Watch(
       X[i].isRunning,
@@ -427,9 +271,7 @@ window.onload = async function (e) {
       X[i].pauseTime,
       X[i].continueTime
     );
-    $("#stopwatches").append(
-      StopWatchBody(listStopWatch[listStopWatch.length - 1])
-    );
+    document.querySelector("#stopwatches").insertAdjacentHTML('afterend', StopWatchBody(listStopWatch[listStopWatch.length - 1]));
   }
 };
 
@@ -447,12 +289,3 @@ addWatchButton.addEventListener("click", AddWatch);
 
 var removeAllButton = document.getElementById("removeAll_btn");
 removeAllButton.addEventListener("click", RemoveAll);
-
-const total = document.querySelector('#total_jam');
-
-function showTotal(Total) {
-  Total.style.display = "block";
-}
-function hideTotal(Total) {
-  Total.style.display = "none";
-}
