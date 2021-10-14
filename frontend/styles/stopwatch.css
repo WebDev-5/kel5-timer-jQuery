@@ -130,17 +130,17 @@ input[type = "submit"]:hover{
   color: white;
 }
 
+.Notes {
+  float: left;
+  width: 40%;
+}
+
 .panel-title {
   margin-left: 20px;
   margin-top: 6px;
   font-size: 20px;
   color: inherit;
   /* background-color: #d9534f; */
-}
-
-.Notes {
-  float: left;
-  width: 40%;
 }
 
 .body {

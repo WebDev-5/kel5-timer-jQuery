@@ -61,10 +61,23 @@ function StopWatchBody(Watch) {
     "<h3 class='panel-title'>" +
     Watch.title +
     "</h3>" +
+    
     "</div>" +
+
+    "<div class='Notes'>" +
+
     "<button id='remove_btn' onclick='RemoveOne(" +
     Watch.id +
     ")'>X</button>" +
+
+    "<button id='note_btn' data-toggle='modal' data-target='#notesModal' onclick='fillModal(" +
+    Watch.id +
+    ")'>" +
+    " Notes" +
+    "</button>" +
+
+
+    "</div>" +
     "</div>" +
     "</div>" +
     "<div class='body'>" +
@@ -103,7 +116,8 @@ function Watch(
   startTime = 0,
   timeDelays = 0,
   pauseTime = 0,
-  continueTime = 0
+  continueTime = 0,
+  notes = []
 ) {
   if (title == null) title = document.getElementById("title").value;
   this.id = idCounter;
@@ -114,6 +128,7 @@ function Watch(
   this.timeDelays = timeDelays;
   this.pauseTime = pauseTime;
   this.continueTime = continueTime;
+  this.notes = notes;
 }
 
 //adds watch to DOM
@@ -247,6 +262,100 @@ function updateClocks() {
       }
     }
   }
+}
+
+//function to add note to the watch's list and reload the modal
+function AddNote(id) {
+  for (var i = 0; i < listStopWatch.length; i++) {
+    if (listStopWatch[i].id == id) {
+      listStopWatch[i].notes.push(document.getElementById("newNote").value);
+      fillModal(id);
+      break;
+    }
+  }
+}
+
+//function to remove note from list when cross button in list items is pressed
+function RemoveNote(elem, id, noteIndex) {
+  for (var i = 0; i < listStopWatch.length; i++) {
+    if (listStopWatch[i].id == id) {
+      listStopWatch[i].notes.splice(noteIndex, 1);
+      elem.outerHTML = "";
+    }
+  }
+}
+
+function fillModal(id) {
+  var watch = null;
+  var retHtmlTitle = "";
+  var retHtmlBody = "";
+  var retHtmlFooter = "";
+
+  for (var i = 0; i < listStopWatch.length; i++) {
+    if (listStopWatch[i].id == id) {
+      watch = listStopWatch[i];
+    }
+  }
+
+  if (watch == null) {
+    console.log("error");
+  }
+
+  if (watch.isRunning == 0) {
+    var lastOpened = watch.pauseTime;
+  } else {
+    var lastOpened = Date.now();
+  }
+
+  if (watch.startTime == 0) {
+    var startTime2 = lastOpened;
+  } else {
+    var startTime2 = watch.startTime;
+  }
+
+  retHtmlTitle = watch.title;
+
+  retHtmlBody =
+    retHtmlBody +
+    "<h2 class='text-center' + id='note" +
+    watch.id +
+    "'>" +
+    GiveTimeString(lastOpened - startTime2 - watch.timeDelays) +
+    "</h2>" +
+    "<hr>";
+
+  retHtmlBody += "<ul class='list-group'>";
+  for (var i = 0; i < watch.notes.length; i++) {
+    retHtmlBody +=
+      "<li class='row list-group-item'>" +
+      "<p class='col-md-11 list-item'>" +
+      watch.notes[i] +
+      "</p>" +
+      "<span class='col-md-1 glyphicon glyphicon-remove pull-right' onclick='RemoveNote(this.parentNode, " +
+      watch.id +
+      ", " +
+      i +
+      ")'>" +
+      "</span>" +
+      "</li>";
+  }
+  retHtmlBody += "</ul>";
+
+  retHtmlFooter +=
+    "<div class='input-group'>" +
+    "<input type='text' name='noteText' class='form-control' id='newNote' placeholder='Write Note' onKeyDown='if(event.which==13) AddNote(" +
+    watch.id +
+    ")' />" +
+    "<span class='input-group-btn'>" +
+    "<button id='add_note' onclick='AddNote(" +
+    watch.id +
+    ")' class='form-control btn btn-primary'><span class='glyphicon glyphicon-plus'></span> Add Note </button>" +
+    "</span>" +
+    "</div>";
+
+  $("#notesModalTitle").html(retHtmlTitle);
+  $("#notesModalBody").html(retHtmlBody);
+  $("#notesModalFooter").html(retHtmlFooter);
 }
 
 //clocks get updated each second because of this
