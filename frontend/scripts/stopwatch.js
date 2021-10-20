@@ -378,7 +378,8 @@ window.onload = function (e) {
       X[i].startTime,
       X[i].timeDelays,
       X[i].pauseTime,
-      X[i].continueTime
+      X[i].continueTime,
+      X[i].notes
     );
     document.querySelector("#stopwatches").insertAdjacentHTML('afterend', StopWatchBody(listStopWatch[listStopWatch.length - 1]));
   }
