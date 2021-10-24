@@ -80,16 +80,15 @@
 [![Product Name Screen Shot][product-screenshot]](https://github.com/WebDev-5/kel5-timer-jQuery)
 
 Multi Stopwatch is an application that was built to fulfill a mini project assignment for Web Development course, which was developed by Webdev Kelompok 5 D4 2019 Politeknik Negeri Bandung.
-This an application that is a simulation of a stopwatch or timer, which can be used to calculate and set the time for each activity you do. This application is built using HTML, CSS, Node.js, Axios, and PostgreSQL. 
+This an application that is a simulation of a stopwatch or timer, which can be used to calculate and set the time for each activity you do. This application is built using HTML, CSS, Node.js, express.js, Sequelize, Axios, and PostgreSQL. 
 Still remember, take advantage and don't waste your time!
 
 The following are the features of this application :
 1. Play, Pause, Restart and Stop.
 2. Added a title for each timer.
-3. Added some notes for each timer.
-4. Multi-timer feature, which supports multiple activities. And they will not run in parallel.
-5. Keep running in the background, even if the application is closed.
-6. Displays the total time taken.
+3. Multi-timer feature, which supports multiple activities. And they will not run in parallel.
+4. Keep running in the background, even if the application is closed.
+5. Displays the total time taken.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -102,6 +101,8 @@ The following are the frameworks and libraries that build this application :
 * [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/)
 * [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 * [Node.js](https://nodejs.org/)
+* [Express.js](https://expressjs.com/)
+* [Sequelize](https://sequelize.org/)
 * [Axios](https://axios-http.com/docs/intro)
 * [PostgreSQL](https://www.postgresql.org/)
 
@@ -121,8 +122,17 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/WebDev-5/kel5-timer-jQuery
    ```
-2. Open the `index.html` with your browser.
-3. Run application.
+2. Open terminal and change directory to backend folder
+   ```sh
+   cd .../kel5-timer-jQuery/backend
+   ```
+3. Create a new databse 'timer' in Postgre with `webdev-5` as db_user and db_password.
+4. Run server 
+   ```sh
+   node server.js
+   ```
+4. Open the `index.html` with your browser in folder `kel5-timer-jQuery`.
+5. Run application.
    
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -159,6 +169,7 @@ For example :
 - [x] Add multiple timer feature.
 - [x] Fix and update local storage.  
 - [x] Fix and remove display bug. 
+- [x] Fix connection between frontend and backend. 
 
 See the [open issues](https://github.com/WebDev-5/kel5-timer-jQuery/issues) for a full list of proposed features (and known issues).
 
@@ -212,11 +223,12 @@ Project Link: [Multiple Stopwatch Kelompok 5](https://github.com/WebDev-5/kel5-t
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+We've included a few of our favorites to kick things off!
 
 * [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
 * [Readme Template](https://github.com/othneildrew/Best-README-Template)
+* [Example CRUD Rest APIs](https://www.bezkoder.com/node-express-sequelize-postgresql/)
+* [Axios Example](https://github.com/axios/axios)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
