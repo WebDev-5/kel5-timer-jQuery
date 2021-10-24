@@ -122,11 +122,11 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/WebDev-5/kel5-timer-jQuery
    ```
-2. Open terminal and change directory to backend folder
+2. Create a new databse 'timer' in Postgre with `webdev-5` as db_user and db_password.
+3.  Open terminal and change directory to backend folder
    ```sh
    cd .../kel5-timer-jQuery/backend
    ```
-3. Create a new databse 'timer' in Postgre with `webdev-5` as db_user and db_password.
 4. Run server 
    ```sh
    node server.js
