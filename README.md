@@ -118,25 +118,26 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Clone the repository
+1. Clone the repository.
    ```sh
    git clone https://github.com/WebDev-5/kel5-timer-jQuery
    ```
-2. Create a new database `timer` in Postgre with `webdev-5` as db_user and db_password.
-3. Open terminal and change directory to backend folder
+2. Create a new role in Postgre, set name and password as `webdev-5`.
+3. Create a new database `timer` in Postgre and set the owner to `webdev-5`.
+4. Open terminal and change directory to backend folder.
    ```sh
    cd .../kel5-timer-jQuery/backend
    ```
-4. Install the dependencies.
+5. Install the dependencies.
    ```sh
    npm install express sequelize pg pg-hstore body-parser cors --save
    ```
-5. Run server 
+6. Run server.
    ```sh
    node server.js
    ```
-6. Open the `index.html` with your browser in folder `kel5-timer-jQuery`.
-7. Run application.
+7. Open the `index.html` with your browser in folder `kel5-timer-jQuery`.
+8. Run application.
    
 <p align="right">(<a href="#top">back to top</a>)</p>
 
