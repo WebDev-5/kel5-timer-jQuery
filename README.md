@@ -127,12 +127,16 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    cd .../kel5-timer-jQuery/backend
    ```
-4. Run server 
+4. Install the dependencies.
+   ```sh
+   npm install
+   ```
+5. Run server 
    ```sh
    node server.js
    ```
-4. Open the `index.html` with your browser in folder `kel5-timer-jQuery`.
-5. Run application.
+6. Open the `index.html` with your browser in folder `kel5-timer-jQuery`.
+7. Run application.
    
 <p align="right">(<a href="#top">back to top</a>)</p>
 
