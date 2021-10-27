@@ -34,10 +34,10 @@
   <p align="center">
     An awesome Stopwatch to manage your time!
     <br />
-    <a href="https://github.com/WebDev-5/kel5-timer-jQuery"><strong>Open Application »</strong></a>
+    <a href="#installation"><strong>Open Application »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/WebDev-5/kel5-timer-jQuery">View Demo</a>
+    <a href="#usage">View Demo</a>
     ·
     <a href="https://github.com/WebDev-5/kel5-timer-jQuery/issues">Report Bug</a>
     ·
@@ -80,7 +80,7 @@
 [![Product Name Screen Shot][product-screenshot]](https://github.com/WebDev-5/kel5-timer-jQuery)
 
 Multi Stopwatch is an application that was built to fulfill a mini project assignment for Web Development course, which was developed by Webdev Kelompok 5 D4 2019 Politeknik Negeri Bandung.
-This an application that is a simulation of a stopwatch or timer, which can be used to calculate and set the time for each activity you do. This application is built using HTML, CSS, Node.js, express.js, Sequelize, Axios, and PostgreSQL. 
+This an application that is a simulation of a stopwatch or timer, which can be used to calculate and set the time for each activity you do. This application is built using HTML, CSS, Node.js, Express.js, Sequelize, Axios, and PostgreSQL. 
 Still remember, take advantage and don't waste your time!
 
 The following are the features of this application :
@@ -129,7 +129,7 @@ To get a local copy up and running follow these simple example steps.
    ```
 4. Install the dependencies.
    ```sh
-   npm install
+   npm install express sequelize pg pg-hstore body-parser cors --save
    ```
 5. Run server 
    ```sh
